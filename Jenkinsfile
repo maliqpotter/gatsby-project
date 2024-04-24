@@ -3,7 +3,7 @@ pipeline {
     
     environment {
         // Define the private key as an environment variable
-        HOSTNAME_CREDENTIAL = credentials('4b89012a-08fc-4201-9e74-38f48a567284') // Make sure to replace 'your-private-key-credential-id' with the ID of your Jenkins credential containing the private key
+        //CREDS = credentials('server_access') // Make sure to replace 'your-private-key-credential-id' with the ID of your Jenkins credential containing the private key
         SERVER_IP = '62.72.27.60'
     }
 
@@ -19,13 +19,11 @@ pipeline {
 
         stage('Test Connection') {
             steps {
-                script {
-                    def hostnameFile = writeFile file: 'temp_hostname', text: HOSTNAME_CREDENTIAL
-
-                    sh "chmod 600 ${hostnameFile}"
-
+                // Use withCredentials block to securely access your credentials
+                withCredentials([usernamePassword(credentialsId: 'server_access', usernameVariable: 'USERNAME', passwordVariable: 'SSH_PRIVATE_KEY')]) {
+                    // SSH into the server and execute any additional deployment commands
                     sh """
-                        ssh -o StrictHostKeyChecking=no -i ${hostnameFile} $HOSTNAME:${SERVER_IP} 'mkdir kesekian'
+                        ssh -o StrictHostKeyChecking=no -i "${SSH_PRIVATE_KEY}" ${USERNAME}@${SERVER_IP} 'mkdir test_koneksi'
                     """
                 }
             }

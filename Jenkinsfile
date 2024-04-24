@@ -11,6 +11,7 @@ pipeline {
 
         stage('Test Connection') {
             steps {
+                script {
                     def hostnameFile = writeFile file: 'temp_hostname', text: HOSTNAME
 
                     sh "chmod 600 ${hostnameFile}"
@@ -18,7 +19,7 @@ pipeline {
                     sh """
                         ssh -o StrictHostKeyChecking=no -i ${hostnameFile} $HOSTNAME:${SERVER_IP} 'mkdir test_connection'
                     """
-
+                }
             }
         }
 

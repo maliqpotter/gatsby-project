@@ -20,7 +20,7 @@ pipeline {
         stage('Test Connection') {
             steps {
                 // Use withCredentials block to securely access your credentials
-                withCredentials([usernamePassword(credentialsId: 'server_access', usernameVariable: 'USERNAME', passwordVariable: 'SSH_PRIVATE_KEY')]) {
+                withCredentials([sshUserPrivateKey(credentialsId: 'server_access', keyFileVariable: 'SSH_PRIVATE_KEY', passphraseVariable: '', usernameVariable: 'USERNAME')]) {
                     // SSH into the server and execute any additional deployment commands
                     sh """
                         ssh -o StrictHostKeyChecking=no -i "${SSH_PRIVATE_KEY}" ${USERNAME}@${SERVER_IP} 'mkdir test_koneksi'

@@ -19,7 +19,7 @@ pipeline {
                         // Assign the credentials to environment variables
                         USERNAME = env.USERNAME
                         SSH_PRIVATE_KEY = env.SSH_PRIVATE_KEY
-                        echo "SSH_PRIVATE_KEY: ${SSH_PRIVATE_KEY}"
+                        echo "SSH_PRIVATE_KEY: $SSH_PRIVATE_KEY"
                     }
                 }
             }

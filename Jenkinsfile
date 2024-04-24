@@ -19,6 +19,7 @@ pipeline {
                         // Assign the credentials to environment variables
                         USERNAME = env.USERNAME
                         SSH_PRIVATE_KEY = env.SSH_PRIVATE_KEY
+                        echo "SSH_PRIVATE_KEY: ${SSH_PRIVATE_KEY}"
                     }
                 }
             }
@@ -31,16 +32,16 @@ pipeline {
             }
         }
 
-        stage('Test Connection') {
-            steps {
-                // Use withCredentials block to securely access your credentials
-                script {
-                    sh """
-                        ssh -o StrictHostKeyChecking=no -i "$SSH_PRIVATE_KEY" $USERNAME@$SERVER_IP 'mkdir test_koneksi'
-                    """
-                }
-            }
-        }
+        //stage('Test Connection') {
+        //    steps {
+        //        // Use withCredentials block to securely access your credentials
+        //        script {
+        //            sh """
+        //                ssh -o StrictHostKeyChecking=no -i "$SSH_PRIVATE_KEY" $USERNAME@$SERVER_IP 'mkdir test_koneksi'
+        //            """
+        //        }
+        //    }
+        //}
         
         //stage('Build') {
         //    steps {

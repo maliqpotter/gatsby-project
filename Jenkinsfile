@@ -3,16 +3,24 @@ pipeline {
     
     environment {
         // Define the private key as an environment variable
-        HOSTNAME = credentials('4b89012a-08fc-4201-9e74-38f48a567284') // Make sure to replace 'your-private-key-credential-id' with the ID of your Jenkins credential containing the private key
+        HOSTNAME_CREDENTIAL = credentials('4b89012a-08fc-4201-9e74-38f48a567284') // Make sure to replace 'your-private-key-credential-id' with the ID of your Jenkins credential containing the private key
         SERVER_IP = '62.72.27.60'
     }
 
     stages {
 
+
+        stage('Checkout') {
+            steps {
+                // Checkout your source code repository
+                git 'https://github.com/maliqpotter/gatsby-project.git'
+            }
+        }
+
         stage('Test Connection') {
             steps {
                 script {
-                    def hostnameFile = writeFile file: 'temp_hostname', text: HOSTNAME
+                    def hostnameFile = writeFile file: 'temp_hostname', text: HOSTNAME_CREDENTIAL
 
                     sh "chmod 600 ${hostnameFile}"
 
@@ -22,13 +30,6 @@ pipeline {
                 }
             }
         }
-
-        //stage('Checkout') {
-        //    steps {
-        //        // Checkout your source code repository
-        //        git 'https://github.com/your/repository.git'
-        //    }
-        //}
         
         //stage('Build') {
         //    steps {

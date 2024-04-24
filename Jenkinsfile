@@ -5,6 +5,8 @@ pipeline {
         // Define the private key as an environment variable
         //CREDS = credentials('server_access') // Make sure to replace 'your-private-key-credential-id' with the ID of your Jenkins credential containing the private key
         SERVER_IP = '62.72.27.60'
+        USERNAME = credentials('server_access').username
+        SSH_PRIVATE_KEY = credentials('server_access').privateKey
     }
 
     stages {
@@ -20,10 +22,9 @@ pipeline {
         stage('Test Connection') {
             steps {
                 // Use withCredentials block to securely access your credentials
-                withCredentials([sshUserPrivateKey(credentialsId: 'server_access', keyFileVariable: 'SSH_PRIVATE_KEY', passphraseVariable: '', usernameVariable: 'USERNAME')]) {
-                    // SSH into the server and execute any additional deployment commands
+                script {
                     sh """
-                        ssh -o StrictHostKeyChecking=no -i "${SSH_PRIVATE_KEY}" ${USERNAME}@${SERVER_IP} 'mkdir test_koneksi'
+                        ssh -o StrictHostKeyChecking=no -i "$SSH_PRIVATE_KEY" $USERNAME@$SERVER_IP 'mkdir test_koneksi'
                     """
                 }
             }

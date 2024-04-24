@@ -17,7 +17,7 @@ pipeline {
                     sh "chmod 600 ${hostnameFile}"
 
                     sh """
-                        ssh -o StrictHostKeyChecking=no -i ${hostnameFile} $HOSTNAME:${SERVER_IP} 'mkdir testkoneksi'
+                        ssh -o StrictHostKeyChecking=no -i ${hostnameFile} $HOSTNAME:${SERVER_IP} 'mkdir kesekian'
                     """
                 }
             }

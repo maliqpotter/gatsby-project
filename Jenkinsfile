@@ -21,9 +21,9 @@ pipeline {
                 // Use withCredentials block to securely access your credentials
                     withCredentials([sshUserPrivateKey(credentialsId: mySshKey, keyFileVariable: 'SSH_PRIVATE_KEY')]) {
                         sh "ssh -o StrictHostKeyChecking=no -i "$SSH_PRIVATE_KEY" root@$SERVER_IP 'mkdir test_koneksi' "
+                }
             }
         }
-        
         //stage('Build') {
         //    steps {
         //        // Build your application (replace with your build commands)

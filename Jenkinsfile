@@ -16,14 +16,21 @@ pipeline {
             }
         }
 
-        stage('Test Connection') {
-            steps {
-                // Use withCredentials block to securely access your credentials
-                    withCredentials([sshUserPrivateKey(credentialsId: mySshKey, keyFileVariable: 'SSH_PRIVATE_KEY')]) {
-                        sh "ssh -o StrictHostKeyChecking=no -i "$SSH_PRIVATE_KEY" root@$SERVER_IP 'mkdir test_koneksi' "
-                }
-            }
-        }
+    }
+
+    stage('SSH to server') {
+      steps {
+        sshCommand(
+          remote: [
+            user: 'root',
+            host: '62.72.27.60',
+            credentialsId: 'server_access'
+          ],
+          command: 'mkdir test_connection'
+        )
+      }
+    }
+        
         //stage('Build') {
         //    steps {
         //        // Build your application (replace with your build commands)
@@ -56,5 +63,5 @@ pipeline {
         //        }
         //    }
         //}
-    }
+    //}
 }

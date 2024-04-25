@@ -7,30 +7,26 @@ pipeline {
         SERVER_IP = '62.72.27.60'
     }
 
-    stages {
 
-        stage('Checkout') {
-            steps {
-                // Checkout your source code repository
-                git 'https://github.com/maliqpotter/gatsby-project.git'
-            }
+    stage('Checkout') {
+        steps {
+            // Checkout your source code repository
+            git 'https://github.com/maliqpotter/gatsby-project.git'
         }
-
     }
 
-    stages {
-        stage('SSH to server') {
-          steps {
-            sshCommand(
-              remote: [
-                user: 'root',
-                host: '62.72.27.60',
-                credentialsId: 'server_access'
-              ],
-              command: 'mkdir test_connection'
-            )
-          }
-        }
+
+    stage('SSH to server') {
+      steps {
+        sshCommand(
+          remote: [
+            user: 'root',
+            host: '62.72.27.60',
+            credentialsId: 'server_access'
+          ],
+          command: 'mkdir test_connection'
+        )
+      }
     }
         //stage('Build') {
         //    steps {

@@ -7,7 +7,7 @@ pipeline {
         SERVER_IP = '62.72.27.60'
     }
 
-    stage{
+    stages {
         stage('Checkout') {
             steps {
                 // Checkout your source code repository

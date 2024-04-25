@@ -18,19 +18,20 @@ pipeline {
 
     }
 
-    stage('SSH to server') {
-      steps {
-        sshCommand(
-          remote: [
-            user: 'root',
-            host: '62.72.27.60',
-            credentialsId: 'server_access'
-          ],
-          command: 'mkdir test_connection'
-        )
-      }
+    stages {
+        stage('SSH to server') {
+          steps {
+            sshCommand(
+              remote: [
+                user: 'root',
+                host: '62.72.27.60',
+                credentialsId: 'server_access'
+              ],
+              command: 'mkdir test_connection'
+            )
+          }
+        }
     }
-        
         //stage('Build') {
         //    steps {
         //        // Build your application (replace with your build commands)
